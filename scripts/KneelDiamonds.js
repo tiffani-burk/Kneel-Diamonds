@@ -1,14 +1,23 @@
 
+import { addCustomOrder } from "./database.js"
 import { DiamondSizes } from "./DiamondSizes.js"
 import { JewelryStyles } from "./JewelryStyles.js"
 import { Metals } from "./Metals.js"
 import { Orders } from "./Orders.js"
 
+//listening for click of button; will add orders to screen.
 document.addEventListener(
     "click",
-    (event) => {
+    (event) => { 
+        const buttonClicked = event.target
+
+        if (buttonClicked.id === "orderButton") { //checking if the id of buttonClicked matched the id on the button
+         addCustomOrder() //if true, it invokes the custom order function, now allowing the click to add custom orders to screen
+        }
     }
 )
+
+         
 
 export const KneelDiamonds = () => {
     return `

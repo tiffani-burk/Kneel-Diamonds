@@ -1,4 +1,4 @@
-import { getSizes } from "./database.js"
+import { getSizes, setSize } from "./database.js"
 
 const sizes = getSizes()
 
@@ -6,16 +6,17 @@ document.addEventListener(
     "change",
     (event) => {
         if (event.target.name === "size") {
-           
+           setSize(parseInt(event.target.value))
         }
     }
 )
 
+//This function returns the radio button options for the sizes options 
 export const DiamondSizes = () => {
     let html = "<ul>"
 
     // Use .map() for converting objects to <li> elements
-    const listItems = sizes.map(size => {
+    const listItems = sizes.map(size => { //iterates through the array (just like a for of loop), the difference is that .map also invokes the function that is defined here
         return `<li>
             <input type="radio" name="size" value="${size.id}" /> ${size.carets}
         </li>`

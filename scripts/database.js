@@ -6,6 +6,7 @@
 
 */
 const database = {
+    orderBuilder: {}, //empty object for the future orders to be build in 
     styles: [
         { id: 1, style: "Classic", price: 500 },
         { id: 2, style: "Modern", price: 710 },
@@ -34,6 +35,7 @@ const database = {
             timestamp: 1614659931693
         }
     ]
+   
 }
 
 export const getMetals = () => {
@@ -52,3 +54,31 @@ export const getOrders = () => {
     return database.customOrders
 }
 
+//export orderBuilder functiond that will set state
+export const setMetal = (id) => {
+    database.orderBuilder.metalId = id
+}
+
+export const setStyle = (id) => {
+    database.orderBuilder.styleId = id
+}
+
+export const setSize = (id) => {
+    database.orderBuilder.sizeId = id
+}
+
+//create a function whose role is to take the temp states stored to orderBuilder and make them permanent.
+export const addCustomOrder = () => {
+    const newOrder = {...database.orderBuilder} //copy the current state of user choices
+
+    const lastIndex = database.customOrders.length - 1 //add new primary key to the obj
+    newOrder.id = database.customOrders[lastIndex].id + 1 
+
+    newOrder.timestamp = Date.now() //add a timestamp to order
+
+    database.customOrders.push(newOrder) //add a newOrder obj to customOrder state
+
+    database.orderBuilder = {}//reset the temp state for user choices
+
+    document.dispatchEvent(new CustomEvent("stateChanged")) //Broadcast notification that the perm state has changed
+}
